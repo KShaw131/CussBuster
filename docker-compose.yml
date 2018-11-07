@@ -1,0 +1,34 @@
+version: "3.4"
+services:
+    web:
+        image: "cussbuster.api"
+        container_name: cussbuster.api
+        build:
+          context: .
+          dockerfile: Docker/CussBuster_App/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - SQLSERVER_HOST=db
+            - SQLSERVER_SA_PASSWORD=Levvel1!
+        ports:
+            - "5000:80"
+        depends_on:
+            - db
+        networks:
+            - bridge
+    db:
+        image: "cussbuster.db"
+        container_name: cussbuster.db
+        build:
+          context: .
+          dockerfile: Docker/CussBuster_DB/Dockerfile
+        environment:
+            ACCEPT_EULA: "Y"
+        ports:
+            - "1433:1433"
+        tty: true
+        networks:
+            - bridge
+networks:
+    bridge:
+        driver: bridge
