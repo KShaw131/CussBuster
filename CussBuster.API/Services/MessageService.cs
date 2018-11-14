@@ -8,7 +8,7 @@ namespace CussBuster.API.Services
     public class MessageService : IMessageService
     {
 
-        //temporary list of cusswords for testing purposes
+        //temporary list for testing purposes
             List<string> tempTable = new List<string>()
             {
                 "Eat",

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CussBuster.API.Services;
+using CussBuster.API.Models;
 
 namespace CussBuster.API.Controllers
 {
@@ -21,31 +22,34 @@ namespace CussBuster.API.Controllers
         [HttpGet]
         public List<string> Get()
         {
-            try
-            {
-                //retrieve list of naughty words
-                var list = _messageService.GetList();
+			try
+			{
+				//retrieve list of naughty words
+				var list = new List<MessageModel>();
 
-                return list;
-            }
-            catch(Exception e)
-            {
-                return null;
-            }
+				return _messageService.GetList();
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
         }
 
         [HttpPost]
-        public IActionResult Post(string naughtyWord)
+        public List<string> Post(MessageModel message)
         {
             try
             {
-                var resultList = _messageService.Add(naughtyWord);
+				var naughtyWord = message.Message;
 
-                return Ok("'" + naughtyWord + "' has been added!");
+                return _messageService.Add(naughtyWord);
+
+                //return Ok("'" + naughtyWord + "' has been added!");
             }
             catch(Exception e)
             {
-                return StatusCode(500, e.Message);
+				return null;
+                //return StatusCode(500, e.Message);
             }
         }
 
