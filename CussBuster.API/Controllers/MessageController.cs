@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CussBuster.API.Services;
-using CussBuster.API.Models;
+using CussBuster.Models;
 
 namespace CussBuster.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/message")]
     [ApiController]
     public class MessageController : Controller
     {
@@ -20,61 +20,21 @@ namespace CussBuster.API.Controllers
         }
 
         [HttpGet]
-        public List<string> Get()
+        public string Get()
         {
 			try
 			{
 				//retrieve list of naughty words
-				var list = new List<MessageModel>();
+				var message = _messageService.GetMessage();
 
-				return _messageService.GetList();
+				return message.Message;
 			}
 			catch (Exception e)
 			{
-				return null;
+                Console.WriteLine(e);
+				return "Message not found";
 			}
         }
-
-        [HttpPost]
-        public List<string> Post(MessageModel message)
-        {
-            try
-            {
-				var naughtyWord = message.Message;
-
-                return _messageService.Add(naughtyWord);
-
-                //return Ok("'" + naughtyWord + "' has been added!");
-            }
-            catch(Exception e)
-            {
-				return null;
-                //return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpPut]
-        public void Put(string naughtyWord)
-        {
-
-        }
-
-        [HttpDelete]
-        public IActionResult Delete()
-        {
-            try
-            {
-                return Ok();
-            }
-            // catch(NotFoundException e)
-            // {
-                
-            // }
-            catch(Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
+        
     }
 }

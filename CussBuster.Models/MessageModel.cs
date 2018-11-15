@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CussBuster.API.Models
+namespace CussBuster.Models
 {
 	public class MessageModel
 	{

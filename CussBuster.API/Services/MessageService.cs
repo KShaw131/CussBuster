@@ -2,35 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CussBuster.Models;
+using CussBuster.Database.Repository;
 
 namespace CussBuster.API.Services
 {
     public class MessageService : IMessageService
     {
+        // private readonly IRepository _repository;
+        
+        // public MessageService(IRepository repository)
+        // {
+        //     var _repository = repository;
+        // }
 
-        //temporary list for testing purposes
-            List<string> tempTable = new List<string>()
-            {
-                "Eat",
-                "My",
-                "Whole",
-                "Ass"
-            };
-
-        public void ParseMessage(string message)
+        public void Add(string naughtyWord)
         {
-            Array ParsedMessage = message.ToArray();
+            //todo
         }
 
-        public List<string> Add(string naughtyWord)
-        {
-            tempTable.Add(naughtyWord);
-            
-            return tempTable;
-        }
+        public MessageModel GetMessage(){
 
-        public List<string> GetList(){
-            return tempTable;
+            // return _messageRepository.Get();
+            MessageModel message = new MessageModel(){
+				MessageId = 1,
+				Message = "Hello World"
+			};
+
+            return message;
         }
 
     }

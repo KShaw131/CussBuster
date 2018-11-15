@@ -15,4 +15,8 @@
   <ItemGroup> 
     <None Remove=".dockerignore" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CussBuster.Database\CussBuster.Database.csproj" />
+    <ProjectReference Include="..\CussBuster.Models\CussBuster.Models.csproj" />
+  </ItemGroup>
 </Project>

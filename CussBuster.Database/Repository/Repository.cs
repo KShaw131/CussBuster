@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using CussBuster.API.Models;
+using CussBuster.Models;
 
 namespace CussBuster.Database.Repository
 {
-	class Repository
+	public class Repository : IRepository
 	{
-		public void Add(MessageModel entity)
+		public MessageModel Get()
 		{
-
+			MessageModel message = new MessageModel(){
+				MessageId = 1,
+				Message = "Hello World"
+			};
+			
+			return message;
 		}
 
 	}
