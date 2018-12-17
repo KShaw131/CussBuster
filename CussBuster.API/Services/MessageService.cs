@@ -3,34 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CussBuster.Models;
+using CussBuster.API.Repository;
+using CussBuster.Database.Entities;
 using CussBuster.Database.Repository;
 
 namespace CussBuster.API.Services
 {
     public class MessageService : IMessageService
     {
-        // private readonly IRepository _repository;
+        private readonly ICurseWordsRepository _curseWordsRepository;
         
-        // public MessageService(IRepository repository)
-        // {
-        //     var _repository = repository;
-        // }
-
-        public void Add(string naughtyWord)
+        public MessageService(ICurseWordsRepository curseWordsRepository)
         {
-            //todo
+            _curseWordsRepository = curseWordsRepository;
         }
 
-        public MessageModel GetMessage(){
+        public IEnumerable<CurseWords> GetCurseWords() => _curseWordsRepository.Queryable();
 
-            // return _messageRepository.Get();
-            MessageModel message = new MessageModel(){
-				MessageId = 1,
-				Message = "Hello World"
-			};
-
-            return message;
+        public CurseWords GetCurseWord(int id)
+        {
+            return _curseWordsRepository.GetById(id);
         }
-
     }
 }

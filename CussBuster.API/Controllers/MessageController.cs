@@ -19,22 +19,53 @@ namespace CussBuster.API.Controllers
             _messageService = messageService;
         }
 
-        [HttpGet]
-        public string Get()
+        [HttpGet("{id:int}")]
+        public IActionResult Get(int id)
         {
 			try
 			{
-				//retrieve list of naughty words
-				var message = _messageService.GetMessage();
+				var messageModel = _messageService.GetCurseWord(id);
 
-				return message.Message;
+                return Ok(messageModel);
 			}
 			catch (Exception e)
 			{
                 Console.WriteLine(e);
-				return "Message not found";
+                return BadRequest("Message not found");
+                
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+			try
+			{
+				var messageModel = _messageService.GetCurseWords();
+
+                return Ok(messageModel);
+			}
+			catch (Exception e)
+			{
+                Console.WriteLine(e);
+                return BadRequest("Message not found");
+
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Post()
+        {
+			try
+			{
+                return Ok();
+			}
+			catch (Exception e)
+			{
+                Console.WriteLine(e);
+				return BadRequest("Unable to post message");
 			}
         }
-        
+
     }
 }

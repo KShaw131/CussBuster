@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using CussBuster.Models;
 
 namespace CussBuster.Database.Repository
 {
-	public interface IRepository
+	public interface IRepository<T>
 	{
-		MessageModel Get();
+		T Add(T entity);
+		IEnumerable<T> Queryable();
+		T Update(T entity);
+		void Delete(T entity);
 	}
 }
