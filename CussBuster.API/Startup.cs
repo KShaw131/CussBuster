@@ -36,7 +36,7 @@ namespace CussBuster.API
             var connection = $"Data Source={hostname};Database={database};Integrated Security=False;User ID={user};Password={password};MultipleActiveResultSets=true";
 
             services.AddDbContext<CussBusterContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IAdminService, AdminService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICurseWordsRepository, CurseWordsRepository>();
         }

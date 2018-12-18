@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using CussBuster.Models;
 
 namespace CussBuster.Database.Repository
 {

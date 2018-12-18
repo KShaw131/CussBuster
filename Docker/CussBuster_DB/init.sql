@@ -38,16 +38,16 @@ VALUES(3, "xenophobic");
 --Seeding data into curseWords table
 
 INSERT INTO curseWords (CurseWord, Severity, TypeId, InsertedDate, InsertedBy, UpdatedDate, UpdatedBy)
-VALUES("Fuck", 10, 2, GETUTCDATE(), "Kelly Shaw", null, null);
+VALUES("Fuck", 10, 2, GETUTCDATE(), "Bob", null, null);
 
 INSERT INTO curseWords (CurseWord, Severity, TypeId, InsertedDate, InsertedBy, UpdatedDate, UpdatedBy)
-VALUES("Ass", 2, 2, GETUTCDATE(), "Kelly Shaw", null, null);
+VALUES("Ass", 2, 2, GETUTCDATE(), "Billy", null, null);
 
 INSERT INTO curseWords (CurseWord, Severity, TypeId, InsertedDate, InsertedBy, UpdatedDate, UpdatedBy)
-VALUES("Shit", 8, 2, GETUTCDATE(), "Kelly Shaw", null, null);
+VALUES("Shit", 8, 2, GETUTCDATE(), "Todd", null, null);
 
 INSERT INTO curseWords (CurseWord, Severity, TypeId, InsertedDate, InsertedBy, UpdatedDate, UpdatedBy)
-VALUES("Nigga", 5, 1, GETUTCDATE(), "Kelly Shaw", null, null);
+VALUES("Hell", 1, 2, GETUTCDATE(), "Ted", null, null);
 
 INSERT INTO curseWords (CurseWord, Severity, TypeId, InsertedDate, InsertedBy, UpdatedDate, UpdatedBy)
-VALUES("Cracker", 3, 1, GETUTCDATE(), "Kelly Shaw", null, null);
+VALUES("Damn", 3, 2, GETUTCDATE(), "Fred", null, null);
