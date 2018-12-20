@@ -5,10 +5,10 @@ namespace CussBuster.Models
 {
 	public class MessageModel
 	{
-		[Key]
 		public int MessageId { get; set; }
-		[Required]
 		public string Message { get; set; }
+		public int SeverityLimit { get; set; }
 		
+		//public CurseWords CurseWordsFound { get; set; }
 	}
 }
