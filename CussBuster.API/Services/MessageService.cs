@@ -6,7 +6,7 @@ using CussBuster.API.Repository;
 using CussBuster.Database.Entities;
 using CussBuster.Database.Repository;
 using CussBuster.Models;
-using System.Text.RegularExpressions;
+using System.Text;
 
 namespace CussBuster.API.Services
 {
@@ -22,32 +22,25 @@ namespace CussBuster.API.Services
         {
             //Parse message
             char[] delimiters = { ' ', ',', '.', ':', '\t' };
-            string[] parsedMessage = message.Message.ToLower().Split(delimiters);
-            string updatedMessage = message.Message;
+            string[] parsedMessage = message.Message.Split(delimiters);
+            //string updatedMessage = message.Message;
 
-            //Gather current curse words from db. Enumerate to list
+            //Gather curse words from db that are above the severity level
             IEnumerable<CurseWords> curseWords = _curseWordsRepository.Queryable();
-            List<string> curseWordList = curseWords.Select(x => x.CurseWord).ToList();
+            List<string> curseWordList = curseWords.Where(x=>x.Severity > message.SeverityLimit).Select(x => x.CurseWord).ToList();
 
-            //Iterate through parsed message collection and see if it contains curse words
-            foreach(var word in parsedMessage)
-            {
-                if(curseWordList.Contains(word.ToString()))
-                {
-                    //build orignal message with replaced curse words
-                    if(curseWords.Where(x => x.CurseWord == word.ToString()).Select(x=>x.Severity).First() > message.SeverityLimit)
-                    {
-                        updatedMessage = Regex.Replace(updatedMessage, word, "****", RegexOptions.IgnoreCase);
-                    }
-                }
-            }
+            //Using FlexSeal to resolve my leaky code
+            StringBuilder updatedMessage = new StringBuilder(message.Message);
 
-            message.Message = updatedMessage;
+            var test = parsedMessage.Where(o => curseWordList.Any().Equals(o));
+
+            message.Message = updatedMessage.ToString();
 
             return message;
         }
     }
 }
+
 
 
 /*
