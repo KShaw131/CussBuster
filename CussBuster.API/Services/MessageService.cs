@@ -26,8 +26,9 @@ namespace CussBuster.API.Services
             string updatedMessage = message.Message;
 
             //Gather current curse words from db. Enumerate to list
-            IEnumerable<CurseWords> curseWords = _curseWordsRepository.Queryable();
-            List<string> curseWordList = curseWords.Where(x=>x.Severity > message.SeverityLimit).Select(x => x.CurseWord).ToList();
+            List<string> curseWordList = _curseWordsRepository.Queryable()
+                .Where(x => x.Severity > message.SeverityLimit)
+                .Select(x => x.CurseWord).ToList();
 
             //Iterate through parsed message collection and see if it contains curse words
             foreach(var word in parsedMessage)
