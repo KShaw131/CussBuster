@@ -27,36 +27,20 @@ namespace CussBuster.API.Services
 
             //Gather current curse words from db. Enumerate to list
             IEnumerable<CurseWords> curseWords = _curseWordsRepository.Queryable();
-            List<string> curseWordList = curseWords.Select(x => x.CurseWord).ToList();
+            List<string> curseWordList = curseWords.Where(x=>x.Severity > message.SeverityLimit).Select(x => x.CurseWord).ToList();
 
             //Iterate through parsed message collection and see if it contains curse words
             foreach(var word in parsedMessage)
             {
-                if(curseWordList.Contains(word.ToString()))
+                if(curseWordList.Contains(word))
                 {
-                    //build orignal message with replaced curse words
-                    if(curseWords.Where(x => x.CurseWord == word.ToString()).Select(x=>x.Severity).First() > message.SeverityLimit)
-                    {
-                        updatedMessage = Regex.Replace(updatedMessage, word, "****", RegexOptions.IgnoreCase);
-                    }
+                    updatedMessage = Regex.Replace(updatedMessage, word, "****", RegexOptions.IgnoreCase);
                 }
             }
 
-            message.Message = updatedMessage;
+            message.Message = updatedMessage.ToString();
 
             return message;
         }
     }
 }
-
-
-/*
--Post messageModel DONE
--Service should parse message into a collection
--Grab current list of curse words from db
--Iterate through collection and search for matching words using find
--If words are found store in a Found collection
--
--Business idea - set a severity limit which allows certain levels to pass through
--Return message with replaced words with stars and the collection of words found
-*/
