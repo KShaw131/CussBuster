@@ -21,14 +21,15 @@ namespace CussBuster.API.Services
         public MessageModel parseMessage(MessageModel message)
         {
             //Parse message
-            char[] delimiters = { ' ', ',', '.', ':', '\t' };
+            char[] delimiters = { ' ', ',', '.', ':', '-', '\t' };
             string[] parsedMessage = message.Message.ToLower().Split(delimiters);
             string updatedMessage = message.Message;
 
+            //Load once at beginning
             //Gather current curse words from db. Enumerate to list
-            List<string> curseWordList = _curseWordsRepository.Queryable()
+            IEnumerable<string> curseWordList = _curseWordsRepository.Queryable()
                 .Where(x => x.Severity > message.SeverityLimit)
-                .Select(x => x.CurseWord).ToList();
+                .Select(x => x.CurseWord);
 
             //Iterate through parsed message collection and see if it contains curse words
             foreach(var word in parsedMessage)
@@ -45,3 +46,12 @@ namespace CussBuster.API.Services
         }
     }
 }
+
+//requirements doc
+//request = string
+//curseword cache
+//Log4net logging
+//read paper
+//adminmodel
+//unit testing
+
