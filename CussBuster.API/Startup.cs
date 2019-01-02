@@ -39,6 +39,8 @@ namespace CussBuster.API
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICurseWordsRepository, CurseWordsRepository>();
+            services.AddScoped<IMessageService, MessageService>();
+            //how to register a single instansce of a class***************
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
