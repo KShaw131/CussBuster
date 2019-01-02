@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+using CussBuster.Database.Entities;
 using CussBuster.Models;
 
 namespace CussBuster.API.Services
 {
     public interface IMessageService
     {
-        void Add(string naughtyWord);
-        MessageModel GetMessage();
+        MessageModel parseMessage(MessageModel message);
     }
 }

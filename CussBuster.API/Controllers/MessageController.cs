@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CussBuster.API.Services;
+using CussBuster.Database.Entities;
 using CussBuster.Models;
 
 namespace CussBuster.API.Controllers
@@ -16,25 +17,21 @@ namespace CussBuster.API.Controllers
 
         public MessageController(IMessageService messageService)
         {
-            _messageService = messageService;
+          _messageService = messageService;
         }
 
-        [HttpGet]
-        public string Get()
+        [HttpPost]
+        public IActionResult parseMessage(MessageModel message)
         {
-			try
-			{
-				//retrieve list of naughty words
-				var message = _messageService.GetMessage();
-
-				return message.Message;
-			}
-			catch (Exception e)
-			{
-                Console.WriteLine(e);
-				return "Message not found";
-			}
+            try
+            {
+                return Ok(_messageService.parseMessage(message));
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
         }
-        
+
     }
 }

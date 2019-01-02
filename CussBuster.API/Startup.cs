@@ -8,9 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using CussBuster.Database.Context;
 using CussBuster.Database.Repository;
 using CussBuster.API.Services;
-
+using CussBuster.API.Repository;
 
 namespace CussBuster.API
 {
@@ -29,12 +30,17 @@ namespace CussBuster.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? "localhost";
+            var database = Environment.GetEnvironmentVariable("SQLSERVER_DB") ?? "CussBusterDB";
+            var user = Environment.GetEnvironmentVariable("SQLSERVER_USER") ?? "sa";
             var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "Levvel1!";
-            var connection = $"Data Source={hostname};Initial Catalog=DB;User ID=sa;Password={password};";
+            var connection = $"Data Source={hostname};Database={database};Integrated Security=False;User ID={user};Password={password};MultipleActiveResultSets=true";
 
-            services.AddDbContext<DbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<CussBusterContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<ICurseWordsRepository, CurseWordsRepository>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IRepository, Repository>();
+            //how to register a single instansce of a class***************
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,9 +53,9 @@ namespace CussBuster.API
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

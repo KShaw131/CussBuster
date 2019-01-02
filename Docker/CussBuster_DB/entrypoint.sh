@@ -1,3 +1,3 @@
 #!/bin/bash
 >&2 echo "SQL Server is starting up"
-/opt/mssql/bin/sqlservr & bash
+/opt/mssql/bin/sqlservr & ./setup.sh & bash
