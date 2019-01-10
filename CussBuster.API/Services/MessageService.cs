@@ -3,55 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CussBuster.API.Repository;
+using CussBuster.API.DataAccess;
 using CussBuster.Database.Entities;
 using CussBuster.Database.Repository;
 using CussBuster.Models;
-using System.Text.RegularExpressions;
 
 namespace CussBuster.API.Services
 {
     public class MessageService : IMessageService
     {
-        private readonly ICurseWordsRepository _curseWordsRepository;
+        private readonly IBadWordCache _badWordCache;
 
-        public MessageService(ICurseWordsRepository curseWordsRepository)
+        public MessageService(IBadWordCache badwordCache)
         {
-            _curseWordsRepository = curseWordsRepository;
+            _badWordCache = badwordCache;
         }
-        public MessageModel parseMessage(MessageModel message)
+        public MessageModel ParseMessage(string message)
         {
             //Parse message
             char[] delimiters = { ' ', ',', '.', ':', '-', '\t' };
-            string[] parsedMessage = message.Message.ToLower().Split(delimiters);
-            string updatedMessage = message.Message;
+            string[] parsedMessage = message.ToLower().Split(delimiters);
+            IEnumerable<CurseWords> curseWords = _badWordCache.CurseWords;
 
-            //Load once at beginning
-            //Gather current curse words from db. Enumerate to list
-            IEnumerable<string> curseWordList = _curseWordsRepository.Queryable()
-                .Where(x => x.Severity > message.SeverityLimit)
-                .Select(x => x.CurseWord);
 
-            //Iterate through parsed message collection and see if it contains curse words
-            foreach(var word in parsedMessage)
+            MessageModel model = new MessageModel()
             {
-                if(curseWordList.Contains(word))
-                {
-                    updatedMessage = Regex.Replace(updatedMessage, word, "****", RegexOptions.IgnoreCase);
-                }
-            }
+                message = message,
+                foundCurseWords = curseWords,
+                occurrences = 1
+            };
 
-            message.Message = updatedMessage.ToString();
-
-            return message;
+        return model;
         }
     }
 }
 
-//requirements doc
-//request = string
-//curseword cache
-//Log4net logging
+//requirements doc  DONE
+//request = string  DONE
+//curseword cache   DONE
+//Log4net logging   
 //read paper
 //adminmodel
 //unit testing
+
+
+//list of parsed words
+//list of bad words
+
+//for every word in bad words, see if there are any matches in list of words. If so, add to list with severity, number of times used,
 

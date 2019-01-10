@@ -12,6 +12,7 @@ using CussBuster.Database.Context;
 using CussBuster.Database.Repository;
 using CussBuster.API.Services;
 using CussBuster.API.Repository;
+using CussBuster.API.DataAccess;
 
 namespace CussBuster.API
 {
@@ -40,7 +41,17 @@ namespace CussBuster.API
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICurseWordsRepository, CurseWordsRepository>();
             services.AddScoped<IMessageService, MessageService>();
-            //how to register a single instansce of a class***************
+
+            //Had to build the service provider before the badword cache could use the cursewordrepository dependency
+            var provider = services.BuildServiceProvider();
+            
+            services.AddSingleton<IBadWordCache, BadWordCache>(sp =>
+            {
+                return new BadWordCache
+                {
+                    CurseWords = provider.GetService<ICurseWordsRepository>().Queryable()
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
