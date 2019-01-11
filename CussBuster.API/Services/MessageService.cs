@@ -22,18 +22,20 @@ namespace CussBuster.API.Services
         {
             //Parse message
             char[] delimiters = { ' ', ',', '.', ':', '-', '\t' };
-            string[] parsedMessage = message.ToLower().Split(delimiters);
-            IEnumerable<CurseWords> curseWords = _badWordCache.CurseWords;
+            var parsedMessage = message.ToLower().Split(delimiters);
+            var curseWords = _badWordCache.CurseWords;
 
+            var foundCurseWords = curseWords
+                .Where(badWord => parsedMessage.Any(word => word.Contains(badWord.CurseWord)))
+                .Select(badWord => new CurseWords { CurseWord = badWord.CurseWord, Severity = badWord.Severity, TypeId = badWord.TypeId });
 
-            MessageModel model = new MessageModel()
+            MessageModel resultModel = new MessageModel()
             {
-                message = message,
-                foundCurseWords = curseWords,
-                occurrences = 1
+                Message = message,
+                FoundCurseWords = foundCurseWords
             };
 
-        return model;
+        return resultModel;
         }
     }
 }

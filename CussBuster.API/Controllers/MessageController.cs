@@ -21,7 +21,7 @@ namespace CussBuster.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ParseMessage(string message)
+        public IActionResult ParseMessage([FromBody]string message)
         {
             try
             {
