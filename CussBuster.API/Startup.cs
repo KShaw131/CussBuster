@@ -42,7 +42,6 @@ namespace CussBuster.API
             services.AddScoped<ICurseWordsRepository, CurseWordsRepository>();
             services.AddScoped<IMessageService, MessageService>();
 
-            //Had to build the service provider before the badword cache could use the cursewordrepository dependency
             var provider = services.BuildServiceProvider();
             
             services.AddSingleton<IBadWordCache, BadWordCache>(sp =>

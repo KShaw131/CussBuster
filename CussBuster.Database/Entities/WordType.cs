@@ -12,7 +12,6 @@ namespace CussBuster.Database.Entities
 
         public int Id { get; set; }
         public string TypeName { get; set; }
-
         public ICollection<CurseWords> CurseWords { get; set; }
     }
 }

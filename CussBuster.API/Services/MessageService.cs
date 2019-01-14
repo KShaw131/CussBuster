@@ -27,11 +27,12 @@ namespace CussBuster.API.Services
 
             var foundCurseWords = curseWords
                 .Where(badWord => parsedMessage.Any(word => word.Contains(badWord.CurseWord)))
-                .Select(badWord => new CurseWordModel { 
-                    CurseWord = badWord.CurseWord, 
-                    Severity = badWord.Severity, 
-                    Type = badWord.TypeId, 
-                    Occurrences = parsedMessage.Count(word => word.Contains(badWord.CurseWord))
+                .Select(badWord => new CurseWordModel 
+                    { 
+                        CurseWord = badWord.CurseWord, 
+                        Severity = badWord.Severity, 
+                        Type = badWord.Type.TypeName,
+                        Occurrences = parsedMessage.Count(word => word.Contains(badWord.CurseWord))
                     });
 
             MessageModel resultModel = new MessageModel()

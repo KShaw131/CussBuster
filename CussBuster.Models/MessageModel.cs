@@ -7,6 +7,6 @@ namespace CussBuster.Models
 	public class MessageModel
 	{
 		public string Message { get; set; }
-		public IEnumerable<Object> FoundCurseWords { get; set; }
+		public IEnumerable<CurseWordModel> FoundCurseWords { get; set; }
 	}
 }
