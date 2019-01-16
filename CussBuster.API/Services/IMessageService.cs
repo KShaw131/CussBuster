@@ -7,6 +7,6 @@ namespace CussBuster.API.Services
 {
     public interface IMessageService
     {
-        MessageModel parseMessage(MessageModel message);
+        MessageModel ParseMessage(string message);
     }
 }

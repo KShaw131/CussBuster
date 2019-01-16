@@ -21,11 +21,11 @@ namespace CussBuster.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult parseMessage(MessageModel message)
+        public IActionResult ParseMessage([FromBody]string message)
         {
             try
             {
-                return Ok(_messageService.parseMessage(message));
+                return Ok(_messageService.ParseMessage(message));
             }
             catch(Exception e)
             {
